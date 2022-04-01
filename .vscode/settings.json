@@ -64,6 +64,8 @@
         "tc_startup.h": "c",
         "utils.h": "c",
         "mem.h": "c",
-        "schmgt_bridge_itk.h": "c"
+        "schmgt_bridge_itk.h": "c",
+        "schedule_tools.h": "c",
+        "tc_string.h": "c"
     }
 }

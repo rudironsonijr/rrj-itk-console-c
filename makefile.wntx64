@@ -20,7 +20,7 @@ OPT_CXX_FLAGS      =
 # ==================================================
 # Platform specific paths
 # ==================================================
-BASE_DIR           = C:\source\RRJ_itk_console
+BASE_DIR           = C:\source\RRJ_itk_console_c
 PROJECT_NAME       = RRJ_itk_console
 TC_ROOT            = C:\SPLM\TC12
 COMPILER_HOME	   = C:\APPS\Microsoft\VisualStudio\BuildTools\2017\VC\Tools\MSVC\14.16.27023\bin\Hostx64\x64
@@ -38,7 +38,7 @@ H_EXT              = $(DOT)h
 C_EXT              = $(DOT)c
 SCRIPT_EXT         = $(DOT)bat
 OBJ_EXT            = $(DOT)obj
-LIB_EXT            = $(DOT)dll
+LIB_EXT            = $(DOT)lib
 LIB_PREFIX         = lib
 
 COMPILE_CMD        = cl
@@ -56,7 +56,7 @@ C_FLAGS            = $(DEFINES) $(INCLUDES) $(MISC_C_FLAGS)
 
 CARG_OUT           = /Fo:
 PDB_OUT            = /Fd:
-LARG_OUT           = -out:
+LINK_OUT           = -out:
 LP                 = /LIBPATH:
 
 LINK_FLAGS         = -debug -nologo -subsystem:console -MACHINE:X64
@@ -78,11 +78,12 @@ OUT_DIR            = $(BASE_DIR)\out
 # ==================================================
 # Define macros for C++ Server Library
 # ==================================================
+SCH_ENTRY_FILE          = $(BASE_DIR)$(PS)schedule_tools$(C_EXT)
 ENTRY_FILE          = $(BASE_DIR)$(PS)$(PROJECT_NAME)$(C_EXT)
 PROJECT_LIBS        = $(SYSLIBS)\
                       /ignore:4199\
                       delayimp.lib\
-                      $(TC_ROOT)$(PS)lib$(PS)itk_main$(OBJ_SUFIX)\
+                      $(TC_ROOT)$(PS)lib$(PS)itk_main$(OBJ_EXT)\
                       $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)syss$(LIB_EXT)\
                       $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)pom$(LIB_EXT)\
                       $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)tcsso$(LIB_EXT) /delayload:libtcsso.dll\
@@ -191,8 +192,7 @@ compile :
 	@echo ________________________________________________________________________________
 	@echo Building $(PROJECT_NAME)
 	@echo Compiling Source...
-    @echo $(COMPILE_CMD) $(C_FLAGS) $(CARG_OUT)$(OUT_DIR)$(PS) $(PDB_OUT)$(OUT_DIR)$(PS)vc140.pdb $(ENTRY_FILE)
-	$(COMPILE_CMD) $(C_FLAGS) $(CARG_OUT)$(OUT_DIR)$(PS) $(PDB_OUT)$(OUT_DIR)$(PS)vc140.pdb $(ENTRY_FILE)
+    $(COMPILE_CMD) $(C_FLAGS) $(CARG_OUT)$(OUT_DIR)$(PS) $(PDB_OUT)$(OUT_DIR)$(PS)vc150.pdb $(ENTRY_FILE)
 	@echo.
 	@echo ________________________________________________________________________________
 
@@ -201,13 +201,14 @@ link :
 	@echo Linking $(PROJECT_NAME)
 	@echo ________________________________________________________________________________
 	@echo ________________________________________________________________________________
-	-$(LIN_CMDK) $(PROJECT_PREFIX_LINK_FLAGS) $(PROJECT_NAME)$(OBJ_SUFIX) $(PROJECT_PREFIX_LIBS) $(LARG_OUT)$(PROJECT_NAME).exe
+	-$(LINK_CMD) $(LINK_FLAGS) $(OUT_DIR)$(PS)$(PROJECT_NAME)$(OBJ_EXT) $(PROJECT_LIBS) $(LINK_OUT)$(OUT_DIR)$(PS)$(PROJECT_NAME).exe
 	@echo.
 	@echo ________________________________________________________________________________
 
 clean :
 	@echo ________________________________________________________________________________
 	@echo Cleaning $(PROJECT_NAME)
-    -cd $(OUT_DIR)
-	-$(DELETE_FILE)  *.exe *.ilk *.obj *.pdb
+    $(DELETE_FILE)  *.exe *.ilk *.obj *.pdb
+    cd $(OUT_DIR)
+	$(DELETE_FILE)  *.exe *.ilk *.obj *.pdb
 	@echo ________________________________________________________________________________
