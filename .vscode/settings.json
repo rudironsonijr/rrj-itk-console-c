@@ -60,6 +60,10 @@
         "fstream": "cpp",
         "iomanip": "cpp",
         "xlocmon": "cpp",
-        "xloctime": "cpp"
+        "xloctime": "cpp",
+        "tc_startup.h": "c",
+        "utils.h": "c",
+        "mem.h": "c",
+        "schmgt_bridge_itk.h": "c"
     }
 }

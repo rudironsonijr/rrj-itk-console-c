@@ -1,21 +1,6 @@
-/*=============================================================================
-                Copyright (c) 2021 Siemens PLM Software
-                   Unpublished - All Rights Reserved
-===============================================================================
-File description:
+#include <RRJ_itk_console.h>
 
-    Filename: HelloTc.c
-
-===============================================================================*/
-
-#include "RRJ_itk_console.h"
-
-
-using namespace Teamcenter;
-using namespace std;
-
-
-static void do_it(void)
+extern void do_it(void)
 {
 	ERROR_CHECK(ITK_set_bypass(true));
 

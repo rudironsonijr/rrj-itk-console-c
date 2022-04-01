@@ -20,52 +20,48 @@ OPT_CXX_FLAGS      =
 # ==================================================
 # Platform specific paths
 # ==================================================
-BASE_DIR           = C:\source
+BASE_DIR           = C:\source\RRJ_itk_console
 PROJECT_NAME       = RRJ_itk_console
-PROJECT_PREFIX     = RRJ_itk_console
-BASE_PATH          = $(BASE_DIR)\$(PROJECT_NAME)
 TC_ROOT            = C:\SPLM\TC12
-TEMPLATE_HOME      = C:\SPLM\TC12\bmide\templates
-SOA_CLIENT_KIT     = C:\SPLM\TC12\soa_client
 COMPILER_HOME	   = C:\APPS\Microsoft\VisualStudio\BuildTools\2017\VC\Tools\MSVC\14.16.27023\bin\Hostx64\x64
-
 
 # ==================================================
 # Platform specific options and commands
 # ==================================================
 PLAT               = wntx64
-PS                 =\\
+PS                 =\ 
 PD                 =;
+DOT                = .
 OS_TYPE            = Win
-LP                 = /LIBPATH:
-OBJ_EXT            = obj
-LIB_EXT            = dll
-LIB_PREFIX         = lib
-OBJ_SUFIX          = .obj
-LIB_SUFFIX         = .lib
-SCRIPT_EXT         = .bat
-C_EXT              = .c
-CPP_EXT            = .cpp
-CXX_EXT            = .cxx
-TOOLBOX_HOME       = $(SOA_CLIENT_KIT)\toolbox
-COMPILE            = cl
-LINK               = link
-DEBUG_CXX_FLAGS    = -c -nologo -EHsc -W1 -Zi -Od -MD
-CXX_FLAGS          = -DSTEP -DAP203 -DAP214 -DWIN32_LEAN_AND_MEAN -DWNT -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -D_SECURE_SCL=0 -D_HAS_TR1=0 -DWNT -D_WIN32 -DWIN32 -D_WIN64 -D_INTEL=1 -DCRTAPI1=_cdecl -DCRTAPI2=cdecl -DIMAN_TAO -DBYPASS_FLEX -DPOMDLL $(OPT_CXX_FLAGS)
-LINK_FLAGS         = -debug -nologo -subsystem:console -MACHINE:X64
-CPP_INCLUDES       = -I$(SOA_CLIENT_KIT)\cpp\includes\cpp\include
-CPPMNGD_INCLUDES   = -I$(SOA_CLIENT_KIT)\cpp\includes\cpp-managed\include
-LIB_PATH           = $(LP)$(SOA_CLIENT_KIT)\cpp\libs\$(PLAT) $(LP)$(TC_ROOT)\lib
 
-SYSLIBS            = wsock32.lib advapi32.lib msvcrt.lib oldnames.lib kernel32.lib winmm.lib
-CARG_OUT           = /Fo:
-PDB_OUT            = /Fd:
-LARG_OUT           = -out:
+H_EXT              = $(DOT)h
+C_EXT              = $(DOT)c
+SCRIPT_EXT         = $(DOT)bat
+OBJ_EXT            = $(DOT)obj
+LIB_EXT            = $(DOT)dll
+LIB_PREFIX         = lib
+
+COMPILE_CMD        = cl
+LINK_CMD           = link
 MAKE_DIR           = mkdir
 DELETE_DIR         = rmdir /S /Q
 DELETE_FILE        = del
 COPY_FILE          = copy
 
+DIPLIB             = -DIPLIB=none
+DEFINES            = -DSTEP -DAP203 -DAP214 -DWIN32_LEAN_AND_MEAN -DWNT -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -D_SECURE_SCL=0 -D_HAS_TR1=0 -DWNT -D_WIN32 -DWIN32 -D_WIN64 -D_INTEL=1 -DCRTAPI1=_cdecl -DCRTAPI2=cdecl -DIMAN_TAO -DBYPASS_FLEX -DPOMDLL $(DIPLIB) $(OPT_CXX_FLAGS)
+MISC_C_FLAGS       = -c -nologo -EHsc -W1 -Zi -Od -MD
+INCLUDES           = -I"$(BASE_DIR)" -I"$(TC_ROOT)$(PS)include"
+C_FLAGS            = $(DEFINES) $(INCLUDES) $(MISC_C_FLAGS)
+
+CARG_OUT           = /Fo:
+PDB_OUT            = /Fd:
+LARG_OUT           = -out:
+LP                 = /LIBPATH:
+
+LINK_FLAGS         = -debug -nologo -subsystem:console -MACHINE:X64
+LIB_PATH           = $(LP)$(TC_ROOT)\lib
+SYS_LIBS            = wsock32.lib advapi32.lib msvcrt.lib oldnames.lib kernel32.lib winmm.lib
 
 # ==================================================
 # Third Party Libraries defined per platform
@@ -76,152 +72,142 @@ COPY_FILE          = copy
 # ==================================================
 # Project paths
 # ==================================================
-PROJECT_HOME       = .
-PROJECT_OUTPUT     = $(BASE_PATH)
+
+OUT_DIR            = $(BASE_DIR)\out
 
 # ==================================================
 # Define macros for C++ Server Library
 # ==================================================
-DIPLIB                        = -DIPLIB=none
-PROJECT_PREFIX_CXX_FLAGS      = $(CXX_FLAGS) $(DIPLIB)
-PROJECT_PREFIX_MAIN           = $(BASE_PATH)$(PS)$(PROJECT_NAME)$(CPP_EXT)
-PROJECT_PREFIX_LINK_FLAGS     = $(LINK_FLAGS)
-PROJECT_PREFIX_INCLUDES       = -I"$(BASE_PATH)" \
-                                -I"$(TC_ROOT)$(PS)include" \
-								-I"$(TC_ROOT)$(PS)include_cpp" \
-								-I"$(TC_ROOT)$(PS)aw_include_cpp"
-PROJECT_PREFIX_LIB_PATH       = $(LP)$(PROJECT_BIN)  $(LIB_PATH)
-PROJECT_PREFIX_LIBS           = $(SYSLIBS)\
-                                  /ignore:4199\
-                                  delayimp.lib\
-                                  $(TC_ROOT)$(PS)lib$(PS)itk_main$(OBJ_SUFIX)\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)syss$(LIB_SUFFIX)\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)pom$(LIB_SUFFIX)\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)tcsso$(LIB_SUFFIX) /delayload:libtcsso.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)ae$(LIB_SUFFIX) /delayload:libae.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)appr$(LIB_SUFFIX) /delayload:libappr.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)archive$(LIB_SUFFIX) /delayload:libarchive.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)backup$(LIB_SUFFIX) /delayload:libbackup.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)bom$(LIB_SUFFIX) /delayload:libbom.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)cfm$(LIB_SUFFIX) /delayload:libcfm.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)constants$(LIB_SUFFIX) /delayload:libconstants.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)cxpom$(LIB_SUFFIX)\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)dmi$(LIB_SUFFIX) /delayload:libdmi.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)ecm$(LIB_SUFFIX) /delayload:libecm.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)eint$(LIB_SUFFIX) /delayload:libeint.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)epm$(LIB_SUFFIX) /delayload:libepm.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)fclasses$(LIB_SUFFIX)\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)form$(LIB_SUFFIX) /delayload:libform.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)gms$(LIB_SUFFIX) /delayload:libgms.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)grm$(LIB_SUFFIX) /delayload:libgrm.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)tcinit$(LIB_SUFFIX)\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)tc$(LIB_SUFFIX)\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)tccore$(LIB_SUFFIX) /delayload:libtccore.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)Fnd0FastenerMgmt$(LIB_SUFFIX) /delayload:libFnd0FastenerMgmt.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)Fnd0FastenerMgmtBvr$(LIB_SUFFIX) /delayload:libFnd0FastenerMgmtBvr.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)tctrushape$(LIB_SUFFIX) /delayload:libtctrushape.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)internal_exits$(LIB_SUFFIX) /delayload:libinternal_exits.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)validation$(LIB_SUFFIX) /delayload:libvalidation.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)itk$(LIB_SUFFIX) /delayload:libitk.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)lov$(LIB_SUFFIX) /delayload:liblov.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)me$(LIB_SUFFIX) /delayload:libme.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)mgc$(LIB_SUFFIX) /delayload:libmgc.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)objio$(LIB_SUFFIX) /delayload:libobjio.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)pie$(LIB_SUFFIX) /delayload:libpie.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)ai$(LIB_SUFFIX) /delayload:libai.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)property$(LIB_SUFFIX)\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)wproxy$(LIB_SUFFIX) /delayload:libwproxy.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)ps$(LIB_SUFFIX) /delayload:libps.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)publication$(LIB_SUFFIX) /delayload:libpublication.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)qry$(LIB_SUFFIX) /delayload:libqry.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)clips$(LIB_SUFFIX) /delayload:libclips.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)clipsutil$(LIB_SUFFIX) /delayload:libclipsutil.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)rbf$(LIB_SUFFIX) /delayload:librbf.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)ce$(LIB_SUFFIX) /delayload:libce.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)res$(LIB_SUFFIX) /delayload:libres.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)sa$(LIB_SUFFIX)\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)ss$(LIB_SUFFIX)\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)step$(LIB_SUFFIX) /delayload:libstep.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)sub_mgr$(LIB_SUFFIX) /delayload:libsub_mgr.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)textsrv$(LIB_SUFFIX)\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)ibom$(LIB_SUFFIX) /delayload:libibom.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)trv$(LIB_SUFFIX) /delayload:libtrv.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)tie$(LIB_SUFFIX) /delayload:libtie.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)nxmgr_im$(LIB_SUFFIX) /delayload:libnxmgr_im.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)aie$(LIB_SUFFIX) /delayload:libaie.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)ics$(LIB_SUFFIX) /delayload:libics.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)eintstub$(LIB_SUFFIX) /delayload:libeintstub.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)sml$(LIB_SUFFIX) /delayload:libsml.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)user_exits$(LIB_SUFFIX) /delayload:libuser_exits.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)rdv$(LIB_SUFFIX) /delayload:librdv.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)collabctx$(LIB_SUFFIX) /delayload:libcollabctx.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)mechatronics$(LIB_SUFFIX) /delayload:libmechatronics.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)tccoreext$(LIB_SUFFIX) /delayload:libtccoreext.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)usagewc$(LIB_SUFFIX) /delayload:libusagewc.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)usage$(LIB_SUFFIX) /delayload:libusage.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)contmgmt$(LIB_SUFFIX) /delayload:libcontmgmt.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)tc_utils$(LIB_SUFFIX) /delayload:libtc_utils.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)schmgt$(LIB_SUFFIX) /delayload:libschmgt.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)schmgt_bridge$(LIB_SUFFIX) /delayload:libschmgt_bridge.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)smengine$(LIB_SUFFIX) /delayload:libsmengine.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)smanalytics$(LIB_SUFFIX) /delayload:libsmanalytics.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)docmgt$(LIB_SUFFIX) /delayload:libdocmgt.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)docmgtapp$(LIB_SUFFIX) /delayload:libdocmgtapp.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)vm$(LIB_SUFFIX) /delayload:libvm.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)adsfoundationdispatch$(LIB_SUFFIX) /delayload:libadsfoundationdispatch.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)cm$(LIB_SUFFIX) /delayload:libcm.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)cmdispatch$(LIB_SUFFIX) /delayload:libcmdispatch.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)constants$(LIB_SUFFIX) /delayload:libconstants.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)base_utils$(LIB_SUFFIX) /delayload:libbase_utils.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)foundationbase$(LIB_SUFFIX) /delayload:libfoundationbase.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)mld$(LIB_SUFFIX) /delayload:libmld.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)functionality$(LIB_SUFFIX) /delayload:libfunctionality.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)mfg$(LIB_SUFFIX)\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)mfgbvr$(LIB_SUFFIX)\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)nls$(LIB_SUFFIX)\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)condvalidation$(LIB_SUFFIX)\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)booleanmath$(LIB_SUFFIX)\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)configurator$(LIB_SUFFIX)\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)fnd0booleansolve$(LIB_SUFFIX)\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)secore$(LIB_SUFFIX)\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)dispatcher$(LIB_SUFFIX)\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)Fnd0formulamgmt$(LIB_SUFFIX) /delayload:libFnd0formulamgmt.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)Fnd0audit_mgr$(LIB_SUFFIX) /delayload:libFnd0audit_mgr.dll\
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)xformer$(LIB_SUFFIX) /delayload:libxformer.dll \
-                                  $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)metaframework$(LIB_SUFFIX)
-PROJECT_PREFIX_LD_FLAGS       = $(PROJECT_PREFIX_LINK_FLAGS) $(PROJECT_PREFIX_LIB_PATH)
-PROJECT_PREFIX_TARGET         = $(PROJECT_OUTPUT)$(PS)$(PROJECT_NAME)
+ENTRY_FILE          = $(BASE_DIR)$(PS)$(PROJECT_NAME)$(C_EXT)
+PROJECT_LIBS        = $(SYSLIBS)\
+                      /ignore:4199\
+                      delayimp.lib\
+                      $(TC_ROOT)$(PS)lib$(PS)itk_main$(OBJ_SUFIX)\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)syss$(LIB_EXT)\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)pom$(LIB_EXT)\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)tcsso$(LIB_EXT) /delayload:libtcsso.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)ae$(LIB_EXT) /delayload:libae.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)appr$(LIB_EXT) /delayload:libappr.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)archive$(LIB_EXT) /delayload:libarchive.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)backup$(LIB_EXT) /delayload:libbackup.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)bom$(LIB_EXT) /delayload:libbom.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)cfm$(LIB_EXT) /delayload:libcfm.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)constants$(LIB_EXT) /delayload:libconstants.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)cxpom$(LIB_EXT)\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)dmi$(LIB_EXT) /delayload:libdmi.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)ecm$(LIB_EXT) /delayload:libecm.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)eint$(LIB_EXT) /delayload:libeint.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)epm$(LIB_EXT) /delayload:libepm.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)fclasses$(LIB_EXT)\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)form$(LIB_EXT) /delayload:libform.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)gms$(LIB_EXT) /delayload:libgms.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)grm$(LIB_EXT) /delayload:libgrm.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)tcinit$(LIB_EXT)\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)tc$(LIB_EXT)\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)tccore$(LIB_EXT) /delayload:libtccore.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)Fnd0FastenerMgmt$(LIB_EXT) /delayload:libFnd0FastenerMgmt.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)Fnd0FastenerMgmtBvr$(LIB_EXT) /delayload:libFnd0FastenerMgmtBvr.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)tctrushape$(LIB_EXT) /delayload:libtctrushape.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)internal_exits$(LIB_EXT) /delayload:libinternal_exits.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)validation$(LIB_EXT) /delayload:libvalidation.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)itk$(LIB_EXT) /delayload:libitk.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)lov$(LIB_EXT) /delayload:liblov.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)me$(LIB_EXT) /delayload:libme.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)mgc$(LIB_EXT) /delayload:libmgc.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)objio$(LIB_EXT) /delayload:libobjio.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)pie$(LIB_EXT) /delayload:libpie.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)ai$(LIB_EXT) /delayload:libai.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)property$(LIB_EXT)\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)wproxy$(LIB_EXT) /delayload:libwproxy.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)ps$(LIB_EXT) /delayload:libps.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)publication$(LIB_EXT) /delayload:libpublication.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)qry$(LIB_EXT) /delayload:libqry.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)clips$(LIB_EXT) /delayload:libclips.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)clipsutil$(LIB_EXT) /delayload:libclipsutil.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)rbf$(LIB_EXT) /delayload:librbf.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)ce$(LIB_EXT) /delayload:libce.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)res$(LIB_EXT) /delayload:libres.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)sa$(LIB_EXT)\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)ss$(LIB_EXT)\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)step$(LIB_EXT) /delayload:libstep.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)sub_mgr$(LIB_EXT) /delayload:libsub_mgr.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)textsrv$(LIB_EXT)\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)ibom$(LIB_EXT) /delayload:libibom.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)trv$(LIB_EXT) /delayload:libtrv.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)tie$(LIB_EXT) /delayload:libtie.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)nxmgr_im$(LIB_EXT) /delayload:libnxmgr_im.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)aie$(LIB_EXT) /delayload:libaie.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)ics$(LIB_EXT) /delayload:libics.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)eintstub$(LIB_EXT) /delayload:libeintstub.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)sml$(LIB_EXT) /delayload:libsml.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)user_exits$(LIB_EXT) /delayload:libuser_exits.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)rdv$(LIB_EXT) /delayload:librdv.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)collabctx$(LIB_EXT) /delayload:libcollabctx.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)mechatronics$(LIB_EXT) /delayload:libmechatronics.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)tccoreext$(LIB_EXT) /delayload:libtccoreext.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)usagewc$(LIB_EXT) /delayload:libusagewc.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)usage$(LIB_EXT) /delayload:libusage.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)contmgmt$(LIB_EXT) /delayload:libcontmgmt.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)tc_utils$(LIB_EXT) /delayload:libtc_utils.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)schmgt$(LIB_EXT) /delayload:libschmgt.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)schmgt_bridge$(LIB_EXT) /delayload:libschmgt_bridge.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)smengine$(LIB_EXT) /delayload:libsmengine.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)smanalytics$(LIB_EXT) /delayload:libsmanalytics.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)docmgt$(LIB_EXT) /delayload:libdocmgt.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)docmgtapp$(LIB_EXT) /delayload:libdocmgtapp.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)vm$(LIB_EXT) /delayload:libvm.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)adsfoundationdispatch$(LIB_EXT) /delayload:libadsfoundationdispatch.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)cm$(LIB_EXT) /delayload:libcm.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)cmdispatch$(LIB_EXT) /delayload:libcmdispatch.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)constants$(LIB_EXT) /delayload:libconstants.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)base_utils$(LIB_EXT) /delayload:libbase_utils.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)foundationbase$(LIB_EXT) /delayload:libfoundationbase.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)mld$(LIB_EXT) /delayload:libmld.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)functionality$(LIB_EXT) /delayload:libfunctionality.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)mfg$(LIB_EXT)\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)mfgbvr$(LIB_EXT)\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)nls$(LIB_EXT)\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)condvalidation$(LIB_EXT)\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)booleanmath$(LIB_EXT)\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)configurator$(LIB_EXT)\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)fnd0booleansolve$(LIB_EXT)\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)secore$(LIB_EXT)\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)dispatcher$(LIB_EXT)\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)Fnd0formulamgmt$(LIB_EXT) /delayload:libFnd0formulamgmt.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)Fnd0audit_mgr$(LIB_EXT) /delayload:libFnd0audit_mgr.dll\
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)xformer$(LIB_EXT) /delayload:libxformer.dll \
+                      $(TC_ROOT)$(PS)lib$(PS)$(LIB_PREFIX)metaframework$(LIB_EXT)
 
+# ==================================================
+# Project targets
+# ==================================================
+all : compile link
 
-
-
-all : $(PROJECT_NAME)_compile $(PROJECT_NAME)_link
-clean : $(PROJECT_NAME)_clean
-
-$(PROJECT_NAME)_compile :
+compile :
 	@echo ________________________________________________________________________________
-	@echo Creating: $(PROJECT_OUTPUT)
-	@rem -@$(MAKE_DIR) $(PROJECT_OUTPUT)
+	@echo Creating: $(OUT_DIR)
+	if not exist $(OUT_DIR) $(MAKE_DIR) $(OUT_DIR)
 	@echo.
 	@echo ________________________________________________________________________________
 	@echo Building $(PROJECT_NAME)
 	@echo Compiling Source...
-    @echo $(COMPILE)  $(PROJECT_PREFIX_CXX_FLAGS) $(PROJECT_PREFIX_INCLUDES) $(DEBUG_CXX_FLAGS) $(CARG_OUT)$(PROJECT_OUTPUT)$(PS) $(PDB_OUT)$(PROJECT_OUTPUT)$(PS)vc150.pdb $(PROJECT_PREFIX_MAIN)
-	@$(COMPILE) $(PROJECT_PREFIX_CXX_FLAGS) $(PROJECT_PREFIX_INCLUDES) $(DEBUG_CXX_FLAGS) $(CARG_OUT)$(PROJECT_OUTPUT)$(PS) $(PDB_OUT)$(PROJECT_OUTPUT)$(PS)vc150.pdb $(PROJECT_PREFIX_MAIN)
+    @echo $(COMPILE_CMD) $(C_FLAGS) $(CARG_OUT)$(OUT_DIR)$(PS) $(PDB_OUT)$(OUT_DIR)$(PS)vc140.pdb $(ENTRY_FILE)
+	$(COMPILE_CMD) $(C_FLAGS) $(CARG_OUT)$(OUT_DIR)$(PS) $(PDB_OUT)$(OUT_DIR)$(PS)vc140.pdb $(ENTRY_FILE)
 	@echo.
 	@echo ________________________________________________________________________________
 
-$(PROJECT_NAME)_link :
+link :
 	@echo ________________________________________________________________________________
 	@echo Linking $(PROJECT_NAME)
 	@echo ________________________________________________________________________________
 	@echo ________________________________________________________________________________
-	@$(LINK) $(PROJECT_PREFIX_LINK_FLAGS) $(PROJECT_NAME)$(OBJ_SUFIX) $(PROJECT_PREFIX_LIBS) $(LARG_OUT)$(PROJECT_NAME).exe
+	-$(LIN_CMDK) $(PROJECT_PREFIX_LINK_FLAGS) $(PROJECT_NAME)$(OBJ_SUFIX) $(PROJECT_PREFIX_LIBS) $(LARG_OUT)$(PROJECT_NAME).exe
 	@echo.
 	@echo ________________________________________________________________________________
 
-$(PROJECT_NAME)_clean :
+clean :
 	@echo ________________________________________________________________________________
 	@echo Cleaning $(PROJECT_NAME)
-	-$(DELETE_FILE)  *.exe *.obj *.pdb
+    -cd $(OUT_DIR)
+	-$(DELETE_FILE)  *.exe *.ilk *.obj *.pdb
 	@echo ________________________________________________________________________________

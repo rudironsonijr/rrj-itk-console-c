@@ -13,4 +13,4 @@ if not defined FMS_HOME set FMS_HOME=C:\SPLM\TC12\tccs
 
 
 CALL %TC_DATA%\tc_profilevars.bat
-CALL "C:\PROGRA~2\MICROS~1\2019\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
+CALL "C:\APPS\Microsoft\VisualStudio\BuildTools\2017\VC\Auxiliary\Build\vcvars64.bat"
