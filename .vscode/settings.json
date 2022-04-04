@@ -66,6 +66,7 @@
         "mem.h": "c",
         "schmgt_bridge_itk.h": "c",
         "schedule_tools.h": "c",
-        "tc_string.h": "c"
+        "tc_string.h": "c",
+        "aom.h": "c"
     }
 }
