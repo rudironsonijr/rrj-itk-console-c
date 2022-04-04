@@ -20,7 +20,7 @@ OPT_CXX_FLAGS      =
 # ==================================================
 # Platform specific paths
 # ==================================================
-BASE_DIR           = C:\source\RRJ_itk_console_c
+BASE_DIR           = C:\source\rrj-itk-console-c
 PROJECT_NAME       = RRJ_itk_console
 TC_ROOT            = C:\SPLM\TC12
 COMPILER_HOME	   = C:\APPS\Microsoft\VisualStudio\BuildTools\2017\VC\Tools\MSVC\14.16.27023\bin\Hostx64\x64
