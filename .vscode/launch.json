@@ -11,7 +11,7 @@
             "program": "RRJ_itk_console.exe",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/out",
             "environment": [],
             "console": "externalTerminal",
             "preLaunchTask": "nmake build"
