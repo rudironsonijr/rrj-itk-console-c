@@ -67,6 +67,9 @@
         "schmgt_bridge_itk.h": "c",
         "schedule_tools.h": "c",
         "tc_string.h": "c",
-        "aom.h": "c"
+        "aom.h": "c",
+        "am.h": "c",
+        "enq.h": "c",
+        "grm.h": "c"
     }
 }
